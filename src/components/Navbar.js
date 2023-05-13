@@ -34,12 +34,12 @@ export default function Navbar() {
                         <div className="flex flex-shrink-0 items-center ">
                            <img
                               className="block h-8 w-8 lg:hidden"
-                              src="./game-insights.png"
+                              src="/game-insights.png"
                               alt="Game Insights"
                            />
                            <img
                               className="hidden h-8 w-8 lg:block"
-                              src="./game-insights.png"
+                              src="/game-insights.png"
                               alt="Game Insights"
                            />
                         </div>
