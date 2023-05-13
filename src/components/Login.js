@@ -1,6 +1,38 @@
+"use client"
+
 import Link from "next/link";
+import {useState} from "react";
+import {loginUser} from "@/apiServices/authentication";
+import Error from "@/components/Error";
+import { useRouter } from 'next/navigation';
 
 const Login = () => {
+   const loginInfos = {
+      email: '',
+      password: ''
+   };
+
+   const router =useRouter();
+   const [login, setLogin] = useState(loginInfos);
+   const [error, setError] = useState('');
+
+   const handleLoginChange = (e) => {
+      const {name, value} = e.target;
+      setLogin({...login, [name]: value});
+   };
+   const handleLoginSubmit = async () => {
+      try {
+         const data = await loginUser(login);
+         if(data.status === 200){
+            return router.push('/');
+         } else {
+            setError(data.message)
+         }
+      } catch (error) {
+         setError(error)
+      }
+   }
+
    return (
       <>
          <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -16,7 +48,7 @@ const Login = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-               <form className="space-y-6" action="#" method="POST">
+               <form className="space-y-6" onSubmit={handleLoginSubmit} method="POST">
                   <div>
                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                         Email address
@@ -28,6 +60,7 @@ const Login = () => {
                            type="email"
                            autoComplete="email"
                            required
+                           onChange={handleLoginChange}
                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                      </div>
@@ -46,11 +79,14 @@ const Login = () => {
                            type="password"
                            autoComplete="current-password"
                            required
+                           onChange={handleLoginChange}
                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                      </div>
                   </div>
-
+                  {
+                     error && <Error error={error}/>
+                  }
                   <div>
                      <button
                         type="submit"

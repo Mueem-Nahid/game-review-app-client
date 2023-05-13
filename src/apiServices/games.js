@@ -1,6 +1,6 @@
 export const allGames = async () => {
    const response = await fetch(
-      `http://localhost:8000/all-games`,
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/all-games`,
       {next: {revalidate: 10000}}
    );
    const data = await response.json();
@@ -10,7 +10,7 @@ export const allGames = async () => {
 
 export const getGame = async (id) => {
    const response = await fetch(
-      `http://localhost:8000/game/${id}`
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/game/${id}`
    );
    const data = await response.json();
    console.log("game: ", data)
