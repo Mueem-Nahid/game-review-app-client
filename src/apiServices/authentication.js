@@ -17,7 +17,5 @@ export const signupUser = async (payload) => {
       },
       body: JSON.stringify(payload),
    });
-   const data = await response.json()
-   console.log('===================>\n', data)
-   return data
+   return await response.json()
 }

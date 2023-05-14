@@ -1,7 +1,7 @@
 import "./globals.css";
-import Providers from "../components/Providers";
-import Navbar from "@/components/Navbar";
 import Head from "@/components/Head";
+import Navbar from "@/components/Navbar";
+import Providers from "../components/Providers";
 
 export default function RootLayout({children}) {
    return (
@@ -13,6 +13,5 @@ export default function RootLayout({children}) {
          {children}
       </Providers>
       </body>
-      </html>
-   );
+      </html>);
 }
