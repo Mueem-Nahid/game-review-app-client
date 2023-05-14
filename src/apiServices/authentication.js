@@ -9,7 +9,7 @@ export const loginUser = async (payload) => {
    return await response.json()
 }
 
-export const signupUser =  async (payload) => {
+export const signupUser = async (payload) => {
    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/register`, {
       method: 'POST',
       headers: {

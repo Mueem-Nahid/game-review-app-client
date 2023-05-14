@@ -1,10 +1,12 @@
 "use client"
 
 import Link from "next/link";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {loginUser} from "@/apiServices/authentication";
 import Error from "@/components/Error";
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
+import Cookies from 'js-cookie';
+import {UserContext} from "@/hooks/UserContext";
 
 const Login = () => {
    const loginInfos = {
@@ -12,9 +14,10 @@ const Login = () => {
       password: ''
    };
 
-   const router =useRouter();
+   const router = useRouter();
    const [login, setLogin] = useState(loginInfos);
    const [error, setError] = useState('');
+   const {setUser} = useContext(UserContext);
 
    const handleLoginChange = (e) => {
       const {name, value} = e.target;
@@ -23,7 +26,12 @@ const Login = () => {
    const handleLoginSubmit = async () => {
       try {
          const data = await loginUser(login);
-         if(data.status === 200){
+         if (data.status === 200) {
+            Cookies.set('user', JSON.stringify(data.data), {
+               expires: 1, // Cookie expiration time in days (e.g., 1 day)
+               path: '/', // Cookie path
+            });
+            setUser(data.data);
             return router.push('/');
          } else {
             setError(data.message)
