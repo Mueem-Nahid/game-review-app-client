@@ -1,12 +1,13 @@
 "use client"
 
 import Link from "next/link";
-import {useContext, useState} from "react";
-import {loginUser} from "@/apiServices/authentication";
-import Error from "@/components/Error";
-import {useRouter} from 'next/navigation';
 import Cookies from 'js-cookie';
+import {useRouter} from 'next/navigation';
+import {useContext, useState} from "react";
+
+import Error from "@/components/Error";
 import {UserContext} from "@/hooks/UserContext";
+import {loginUser} from "@/apiServices/authentication";
 
 const Login = () => {
    const loginInfos = {
@@ -32,7 +33,7 @@ const Login = () => {
                path: '/', // Cookie path
             });
             setUser(data.data);
-            return router.push('/');
+            return location.replace('/');
          } else {
             setError(data.message)
          }

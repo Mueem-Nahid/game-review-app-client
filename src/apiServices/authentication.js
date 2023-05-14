@@ -18,4 +18,11 @@ export const signupUser = async (payload) => {
       body: JSON.stringify(payload),
    });
    return await response.json()
+};
+
+export const findUser = async (id) => {
+   const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/user/${id}`
+   );
+   return await response.json();
 }
