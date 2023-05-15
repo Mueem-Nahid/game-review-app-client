@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 const Card = ({game}) => {
-   console.log("========================", game)
    const dateString = game?.releaseDate;
    const date = new Date(dateString);
    const formattedDate = date.toLocaleDateString("en-US", {
@@ -14,7 +13,7 @@ const Card = ({game}) => {
       <div className="flex flex-col justify-center mb-4 cursor-pointer">
          <Link href={`/game/${game._id}`}>
             <div
-               className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-md shadow-sm p-3 max-w-fit mx-auto border border-white bg-white">
+               className="flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-md shadow-sm p-3 max-w-fit mx-auto border border-white bg-white">
                <div className="w-full md:w-1/3 bg-white grid place-items-center">
                   <img
                      src={game?.picture[0].url}
