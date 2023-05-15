@@ -17,7 +17,7 @@ export default async function GamePage({params}) {
          <div
             className="p-4 md:pt-8 flex flex-col md:flex-row items-center content-center max-w-6xl mx-auto md:space-x-6">
             <img
-               src={game?.picture}
+               src={game?.picture[0].url}
                width={500}
                height={300}
                className="rounded-lg"

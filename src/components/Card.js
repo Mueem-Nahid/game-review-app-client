@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 const Card = ({game}) => {
+   console.log("========================", game)
    const dateString = game?.releaseDate;
    const date = new Date(dateString);
    const formattedDate = date.toLocaleDateString("en-US", {
@@ -16,7 +17,7 @@ const Card = ({game}) => {
                className="relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-md shadow-sm p-3 max-w-fit mx-auto border border-white bg-white">
                <div className="w-full md:w-1/3 bg-white grid place-items-center">
                   <img
-                     src={game?.picture}
+                     src={game?.picture[0].url}
                      alt="game picture" className="rounded-md"/>
                </div>
                <div className="w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3">

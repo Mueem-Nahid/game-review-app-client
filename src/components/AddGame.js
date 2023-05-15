@@ -1,16 +1,24 @@
 "use client"
 
-import {PhotoIcon} from '@heroicons/react/24/solid'
-import {useRouter} from "next/navigation";
-import {useState} from "react";
+import {useContext, useState} from "react";
 
+import {handleImages} from "@/utils/utils";
+import {UserContext} from "@/hooks/UserContext";
+import dataURItoBlob from "@/utils/dataURItoBlob";
+import {addNewGame, uploadImages} from "@/apiServices/games";
+import Success from "@/components/Success";
+import Error from "@/components/Error";
+import Spinner from "@/components/Spinner";
+
+const gameInfos = {
+   title: '', summary: '', category: '', releaseDate: '',
+};
 const AddGame = () => {
-   const gameInfos = {
-      title: '', summary: '', category: '', released_date: '',
-   };
-
-   const router = useRouter();
+   const {user} = useContext(UserContext);
    const [gameObj, setGameObj] = useState(gameInfos);
+   const [loading, setLoading] = useState(false);
+   const [images, setImages] = useState([]);
+   const [message, setMessage] = useState('');
    const [error, setError] = useState('');
 
    const handleInputChange = (e) => {
@@ -18,18 +26,42 @@ const AddGame = () => {
       setGameObj({...gameObj, [name]: value});
    };
 
-   const handleSubmit = (e) => {
-      e.preventDefault()
-      console.log(gameObj)
+   const handleFile = (e) => {
+      handleImages(e, setError, setImages);
    };
 
-   // -------------------------
-   const [file, setFile] = useState('');
-   const [message, setMessage] = useState('');
-   const handleFile = (e) => {
-      setMessage("");
-      e.target.files[0] && setFile(URL.createObjectURL(e.target.files[0]));
-   };
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      setLoading(true)
+      const preparedImages = images.map((img) => {
+         return dataURItoBlob(img);
+      });
+      const path = `${process.env.NEXT_PUBLIC_CLOUDINARY_FOLDER_NAME}/${process.env.NEXT_PUBLIC_CLOUDINARY_POST_FOLDER_NAME}`;
+      let formData = new FormData();
+      formData.append("path", path);
+      preparedImages.forEach((image) => {
+         formData.append("file", image);
+      });
+      const arrayOfImages = await uploadImages(formData, path, user.token);
+      const updatedGameInfos = {
+         ...gameObj,
+         picture: arrayOfImages,
+      };
+      const data = await addNewGame(updatedGameInfos, user.token);
+      if (data?.status === 201) {
+         setMessage(data?.message);
+         setGameObj({});
+         setLoading(false);
+      } else {
+         setError(data?.message);
+         setLoading(false);
+      }
+   }
+
+   const removeImage = (i) => {
+      console.log(i)
+      setImages(images.filter(x => x.name !== i));
+   }
 
    return (<div className='p-4 sm:ml-64'>
       <h2 className="mx-3 md:mx-7 text-base font-semibold leading-7 text-gray-900">Add Game</h2>
@@ -49,6 +81,7 @@ const AddGame = () => {
                               name="title"
                               id="title"
                               autoComplete="title"
+                              value={gameObj.title}
                               onChange={handleInputChange}
                               className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                            />
@@ -65,6 +98,7 @@ const AddGame = () => {
                    id="summary"
                    name="summary"
                    rows={3}
+                   value={gameObj.summary}
                    onChange={handleInputChange}
                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                    defaultValue={''}
@@ -121,15 +155,25 @@ const AddGame = () => {
                                        Select a photo</p>
                                  </div>
                                  <input type="file" onChange={handleFile} className="opacity-0"
-                                        accept="image/jpeg, image/png, image/webp, image/gif"
+                                        accept="image/jpeg, image/png, image/webp, image/gif" multiple
                                         name="file"/>
                               </label>
                            </div>
-                           {file && <div className="flex flex-wrap justify-center gap-2 mt-2">
-                              <div className="overflow-hidden relative">
-                                 <img className="h-32 w-32 rounded-md" src={file} alt=""/>
-                              </div>
-                           </div>}
+
+                           <div className="flex flex-wrap justify-center gap-2 mt-2">
+                              {images.map((file, key) => {
+                                 return (
+                                    <div key={key} className="overflow-hidden relative">
+                                       <i onClick={() => {
+                                          removeImage(file.data)
+                                       }}
+                                          className="exit_icon absolute right-1 hover:text-white cursor-pointer"></i>
+                                       <img className="h-28 w-28 rounded-md" src={file} alt=""/>
+                                    </div>
+                                 )
+                              })}
+                           </div>
+
                         </div>
                      </div>
                   </div>
@@ -161,8 +205,8 @@ const AddGame = () => {
                      <div className="mt-2">
                         <input
                            type="date"
-                           name="released_date"
-                           id="released_date"
+                           name="releaseDate"
+                           id="releaseDate"
                            onChange={handleInputChange}
                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
@@ -170,9 +214,13 @@ const AddGame = () => {
                   </div>
                </div>
             </div>
-
          </div>
-
+         {
+            message && <Success message={message}/>
+         }
+         {
+            error && <Error error={error}/>
+         }
          <div className="mt-6 mx-3 md:mx-7 flex items-center justify-start gap-x-6">
             <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
                Cancel
@@ -181,7 +229,9 @@ const AddGame = () => {
                type="submit"
                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-               Save
+               {
+                  loading ? <Spinner /> : 'Save'
+               }
             </button>
          </div>
       </form>
