@@ -1,56 +1,34 @@
-"use client"
+import GameRow from "@/components/GameRow";
 
-const Dashboard = () => {
+const Dashboard = ({games}) => {
    return (
-      <div>
-         <div className="p-4 sm:ml-64">
-            <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-               <div className="grid grid-cols-3 gap-4 mb-4">
-                  <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-               </div>
-               <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                  <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-               </div>
-               <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-               </div>
-               <div className="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                  <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-               </div>
-               <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-                  <div className="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-                     <p className="text-2xl text-gray-400 dark:text-gray-500">+</p>
-                  </div>
-               </div>
-            </div>
+      <div className="p-4 sm:ml-64">
+         <div className="overflow-x-auto shadow-md sm:rounded-lg">
+            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+               <tr>
+                  <th scope="col" className="px-6 py-3">
+                     Game title
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                     Average rating
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                     Total reviews
+                  </th>
+                  <th scope="col" className="px-6 py-3">
+                     Action
+                  </th>
+               </tr>
+               </thead>
+               <tbody>
+               {
+                  games?.map((game) => (
+                     <GameRow key={game._id} game={game}/>
+                  ))
+               }
+               </tbody>
+            </table>
          </div>
       </div>
    );
