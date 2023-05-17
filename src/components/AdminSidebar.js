@@ -1,13 +1,13 @@
 "use client"
-import {usePathname, useRouter, useSelectedLayoutSegment, useSelectedLayoutSegments} from "next/navigation";
 
 import Link from "next/link";
-import Dashboard from "@/components/Dashboard";
+import {usePathname} from "next/navigation";
+
 import AddGame from "@/components/AddGame";
+import Dashboard from "@/components/Dashboard";
 
 const AdminSidebar = () => {
    const pathname = usePathname();
-   const id = pathname.split('/')[1];
    const pageType = pathname.split('/')[2];
 
    return (
@@ -29,7 +29,7 @@ const AdminSidebar = () => {
             <div className="h-full px-3 py-3 overflow-y-auto bg-gray-50 dark:bg-gray-800">
                <ul className="space-y-2 font-medium pl-8">
                   <li>
-                     <Link href={`${id}/dashboard`}
+                     <Link href={`/dashboard`}
                            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <svg aria-hidden="true"
                              className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -42,7 +42,7 @@ const AdminSidebar = () => {
                   </li>
 
                   <li>
-                     <Link href={`${id}/add-game`}
+                     <Link href={`${pathname}/add-game`}
                            className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                         <svg aria-hidden="true"
                              className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"

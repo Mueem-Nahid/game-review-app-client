@@ -4,7 +4,6 @@ export const allGames = async () => {
       {next: {revalidate: 1000}}
    );
    const data = await response.json();
-   console.log("this: ", data)
    return data.data.games;
 }
 
