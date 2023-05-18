@@ -1,22 +1,24 @@
 "use client"
 
-import Review from "@/components/Review";
 import {useContext, useState} from "react";
-import Error from "@/components/Error";
-import {UserContext} from "@/hooks/UserContext";
 import {usePathname, useRouter} from "next/navigation";
+
+import Error from "@/components/Error";
+import Review from "@/components/Review";
 import {addReview} from "@/apiServices/review";
+import {UserContext} from "@/hooks/UserContext";
 
 const Reviews = ({gameId, reviews}) => {
    const {user} = useContext(UserContext);
-   const router = useRouter()
+   const router = useRouter();
    const path = usePathname();
+   const [allReviews, setAllReviews] = useState(reviews)
    const [rating, setRating] = useState(1);
    const [comment, setComment] = useState('');
    const [error, setError] = useState('');
 
    const handleSubmit = async (e) => {
-      // e.preventDefault();
+      e.preventDefault();
       if (!user) {
          return router.push(`/login?from=${encodeURIComponent(path)}`);
       }
@@ -27,11 +29,11 @@ const Reviews = ({gameId, reviews}) => {
       }
       const data = await addReview(gameId, {comment, rating}, user.token);
       if (data.status === 200) {
-
+         setAllReviews([...allReviews, data.data])
       } else {
          setError(data.message)
       }
-   }
+   };
 
    return (
       <section className="bg-white dark:bg-gray-900 py-8 lg:py-16">
@@ -70,7 +72,7 @@ const Reviews = ({gameId, reviews}) => {
                </button>
             </form>
             {
-               reviews.map((review, i) => (
+               allReviews.map((review, i) => (
                   <Review key={i} review={review}/>
                ))
             }
