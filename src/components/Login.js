@@ -2,20 +2,23 @@
 
 import Link from "next/link";
 import Cookies from 'js-cookie';
-import {useRouter} from 'next/navigation';
 import {useContext, useState} from "react";
+import {useRouter, useSearchParams} from 'next/navigation';
 
 import Error from "@/components/Error";
 import {UserContext} from "@/hooks/UserContext";
 import {loginUser} from "@/apiServices/authentication";
 
 const Login = () => {
+
    const loginInfos = {
       email: '',
       password: ''
    };
 
    const router = useRouter();
+   const destination = useSearchParams();
+   const callbackUrl = destination.get('from') ?? '/';
    const [login, setLogin] = useState(loginInfos);
    const [error, setError] = useState('');
    const {setUser} = useContext(UserContext);
@@ -24,8 +27,9 @@ const Login = () => {
       const {name, value} = e.target;
       setLogin({...login, [name]: value});
    };
-   const handleLoginSubmit = async () => {
+   const handleLoginSubmit = async (e) => {
       try {
+         e.preventDefault();
          const data = await loginUser(login);
          if (data.status === 200) {
             Cookies.set('user', JSON.stringify(data.data), {
@@ -33,14 +37,14 @@ const Login = () => {
                path: '/', // Cookie path
             });
             setUser(data.data);
-            return location.replace('/');
+            return router.replace(callbackUrl);
          } else {
-            setError(data.message)
+            setError(data.message);
          }
       } catch (error) {
-         setError(error)
+         setError(error);
       }
-   }
+   };
 
    return (
       <>

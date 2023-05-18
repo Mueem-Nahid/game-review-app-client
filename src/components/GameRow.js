@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const GameRow = ({game}) => {
    return (
       <tr className="bg-white border-b dark:bg-gray-900 dark:border-gray-700">
@@ -11,7 +13,7 @@ const GameRow = ({game}) => {
             {game.totalReviews}
          </td>
          <td className="px-6 py-4">
-            <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+            <Link href={`game/${game._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</Link>
          </td>
       </tr>
    );

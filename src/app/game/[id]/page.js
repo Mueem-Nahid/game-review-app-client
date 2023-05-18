@@ -44,7 +44,7 @@ export default async function GamePage({params}) {
             </div>
          </div>
          <div>
-            <Reviews reviews={game?.reviewComments}/>
+            <Reviews gameId={gameId} reviews={game?.reviewComments}/>
          </div>
       </div>
    );
