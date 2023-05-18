@@ -5,24 +5,31 @@ import {useContext, useState} from "react";
 import Error from "@/components/Error";
 import {UserContext} from "@/hooks/UserContext";
 import {usePathname, useRouter} from "next/navigation";
+import {addReview} from "@/apiServices/review";
 
 const Reviews = ({gameId, reviews}) => {
    const {user} = useContext(UserContext);
    const router = useRouter()
    const path = usePathname();
    const [rating, setRating] = useState(1);
-   const [review, setReview] = useState('');
+   const [comment, setComment] = useState('');
    const [error, setError] = useState('');
 
-   const handleSubmit = (e) => {
-      e.preventDefault();
+   const handleSubmit = async (e) => {
+      // e.preventDefault();
       if (!user) {
-         return router.push(`/login?from=${encodeURIComponent(path)}`)
+         return router.push(`/login?from=${encodeURIComponent(path)}`);
       }
-      const words = review.split(' ');
+      const words = comment.split(' ');
       const hasMoreThanThreeWords = words.length >= 3;
       if (!hasMoreThanThreeWords) {
-         setError('Review must contain at least 3 words.')
+         return setError('Review must contain at least 3 words.')
+      }
+      const data = await addReview(gameId, {comment, rating}, user.token);
+      if (data.status === 200) {
+
+      } else {
+         setError(data.message)
       }
    }
 
@@ -50,7 +57,7 @@ const Reviews = ({gameId, reviews}) => {
                      })}
                   </div>
 
-                  <textarea id="review" rows="3" onChange={(e) => setReview(e.target.value)}
+                  <textarea id="review" rows="3" onChange={(e) => setComment(e.target.value)}
                             className="px-0 mt-2 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                             placeholder="Write your review..." required></textarea>
                </div>

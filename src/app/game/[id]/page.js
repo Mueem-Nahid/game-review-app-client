@@ -39,7 +39,7 @@ export default async function GamePage({params}) {
                </p>
                <p className="mb-3">
                   <span className="font-semibold mr-1">Rating:</span>
-                  {game?.averageRating}
+                  {game?.averageRating.toFixed(2)}
                </p>
             </div>
          </div>

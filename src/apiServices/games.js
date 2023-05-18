@@ -1,7 +1,7 @@
 export const allGames = async () => {
    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/all-games`,
-      {next: {revalidate: 1000}}
+      {next: {revalidate: 10}}
    );
    const data = await response.json();
    return data.data.games;
@@ -38,7 +38,7 @@ export const uploadImages = async (formData, path, token) => {
    }
 };
 
-export const addNewGame = async (payload,token) => {
+export const addNewGame = async (payload, token) => {
    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/add-game`, {
       method: 'POST',
       headers: {

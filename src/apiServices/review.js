@@ -1,4 +1,4 @@
-export const addNewGame = async (id, payload, token) => {
+export const addReview = async (id, payload, token) => {
    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/game/${id}/comments`, {
       method: 'POST',
       headers: {
