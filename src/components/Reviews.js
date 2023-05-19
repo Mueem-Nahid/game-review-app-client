@@ -72,8 +72,8 @@ const Reviews = ({gameId, reviews}) => {
                </button>
             </form>
             {
-               allReviews.map((review, i) => (
-                  <Review key={i} review={review}/>
+               allReviews?.map((review, i) => (
+                  <Review key={i} review={review} user={user}/>
                ))
             }
          </div>

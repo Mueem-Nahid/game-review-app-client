@@ -1,4 +1,4 @@
-const Review = ({review}) => {
+const Review = ({review, user}) => {
    const dateString = review?.commentedAt;
    const date = new Date(dateString);
    const formattedDate = date.toLocaleDateString("en-US", {
@@ -24,6 +24,20 @@ const Review = ({review}) => {
                      </time>
                   </p>
                </div>
+               {
+                  user?.user_type === 'admin' &&
+                  <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
+                          className="inline-flex rounded-full items-center p-2 text-sm font-medium text-center text-gray-400 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                          type="button">
+                     <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <g>
+                           <path fill="none" d="M0 0h24v24H0z"/>
+                           <path
+                              d="M17 6h5v2h-2v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V8H2V6h5V3a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v3zm1 2H6v12h12V8zm-4.586 6l1.768 1.768-1.414 1.414L12 15.414l-1.768 1.768-1.414-1.414L10.586 14l-1.768-1.768 1.414-1.414L12 12.586l1.768-1.768 1.414 1.414L13.414 14zM9 4v2h6V4H9z"/>
+                        </g>
+                     </svg>
+                  </button>
+               }
             </footer>
             <p className="text-gray-500 dark:text-gray-400">{review.comment}</p>
          </article>
