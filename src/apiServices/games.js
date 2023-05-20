@@ -29,7 +29,6 @@ export const uploadImages = async (formData, path, token) => {
          },
          body: formData,
       });
-      fetchError(response);
       const data = await response.json();
       return data?.data?.images;
    } catch (error) {

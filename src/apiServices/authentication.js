@@ -8,7 +8,6 @@ export const loginUser = async (payload) => {
       },
       body: JSON.stringify(payload),
    });
-   fetchError(response);
    return await response.json()
 }
 
@@ -20,7 +19,6 @@ export const signupUser = async (payload) => {
       },
       body: JSON.stringify(payload),
    });
-   fetchError(response);
    return await response.json()
 };
 
