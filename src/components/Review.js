@@ -1,4 +1,6 @@
-const Review = ({review, user}) => {
+import {deleteReview} from "@/apiServices/review";
+
+const Review = ({review, user, gameId}) => {
    const dateString = review?.commentedAt;
    const date = new Date(dateString);
    const formattedDate = date.toLocaleDateString("en-US", {
@@ -6,6 +8,15 @@ const Review = ({review, user}) => {
       month: "short",
       day: "numeric"
    });
+
+   const handleDeleteComment = async () => {
+      try {
+         await deleteReview(gameId, review?.id, user?.token);
+         location.reload();
+      } catch (error) {
+         console.log(error)
+      }
+   }
 
    return (
       <div>
@@ -28,7 +39,7 @@ const Review = ({review, user}) => {
                   user?.user_type === 'admin' &&
                   <button id="dropdownComment1Button" data-dropdown-toggle="dropdownComment1"
                           className="inline-flex rounded-full items-center p-2 text-sm font-medium text-center text-gray-400 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                          type="button">
+                          type="button" onClick={handleDeleteComment}>
                      <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g>
                            <path fill="none" d="M0 0h24v24H0z"/>

@@ -27,11 +27,16 @@ const Reviews = ({gameId, reviews}) => {
       if (!hasMoreThanThreeWords) {
          return setError('Review must contain at least 3 words.')
       }
-      const data = await addReview(gameId, {comment, rating}, user.token);
-      if (data.status === 200) {
-         setAllReviews([...allReviews, data.data])
-      } else {
-         setError(data.message)
+      try {
+         const data = await addReview(gameId, {comment, rating}, user.token);
+         if (data.status === 200) {
+            location.reload();
+            // setAllReviews([...allReviews, data.data])
+         } else {
+            setError(data.message)
+         }
+      } catch (error) {
+         console.log(error)
       }
    };
 
@@ -73,7 +78,7 @@ const Reviews = ({gameId, reviews}) => {
             </form>
             {
                allReviews?.map((review, i) => (
-                  <Review key={i} review={review} user={user}/>
+                  <Review key={i} review={review} user={user} gameId={gameId}/>
                ))
             }
          </div>

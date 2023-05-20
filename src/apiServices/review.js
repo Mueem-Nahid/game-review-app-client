@@ -12,3 +12,13 @@ export const addReview = async (id, payload, token) => {
    fetchError(response);
    return await response.json()
 }
+
+export const deleteReview = async (gameID, reviewId, token) => {
+   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/game/${gameID}/comments/${reviewId}`, {
+      method: 'DELETE',
+      headers: {
+         Authorization: `Bearer ${token}`,
+      },
+   });
+   fetchError(response);
+}

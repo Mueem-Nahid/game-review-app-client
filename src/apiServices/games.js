@@ -3,17 +3,17 @@ import {fetchError} from "@/utils/utils";
 export const allGames = async () => {
    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/all-games`,
-      {next: {revalidate: 10}}
+      {cache: "no-store", next: {revalidate: 0}}
    );
    fetchError(response);
    const data = await response.json();
-   console.log(data,'----')
    return data.data.games;
 }
 
 export const getGame = async (id) => {
    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}/game/${id}`
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}/game/${id}`,
+      {cache: "no-store", next: {revalidate: 0}}
    );
    fetchError(response);
    const data = await response.json();
