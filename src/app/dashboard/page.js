@@ -14,7 +14,13 @@ export default async function DashboardPage() {
    if (userObj.user_type !== 'admin') {
       return notFound();
    }
-   const games = await allGames();
+   let games = [];
+   try {
+      games = await allGames();
+   } catch (error) {
+      console.log(error)
+   }
+
    return (
       <Dashboard games={games}/>
    )

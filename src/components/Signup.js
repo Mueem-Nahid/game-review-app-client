@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link";
-import {useRouter} from "next/navigation";
 import {useState} from "react";
 import {signupUser} from "@/apiServices/authentication";
 import Success from "@/components/Success";
@@ -15,7 +14,6 @@ const Signup = () => {
       password: ''
    };
 
-   const router = useRouter();
    const [signup, setSignup] = useState(signupInfos);
    const [successMessage, setSuccessMessage] = useState('');
    const [error, setError] = useState('');
@@ -64,7 +62,7 @@ const Signup = () => {
                            type="text"
                            required
                            onChange={handleSignupChange}
-                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                           className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                      </div>
                   </div>
@@ -80,7 +78,7 @@ const Signup = () => {
                            type="text"
                            required
                            onChange={handleSignupChange}
-                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                           className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                      </div>
                   </div>
@@ -97,7 +95,7 @@ const Signup = () => {
                            autoComplete="email"
                            required
                            onChange={handleSignupChange}
-                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                           className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                      </div>
                   </div>
@@ -116,7 +114,7 @@ const Signup = () => {
                            autoComplete="current-password"
                            required
                            onChange={handleSignupChange}
-                           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                           className="block p-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                      </div>
                   </div>

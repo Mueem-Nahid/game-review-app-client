@@ -1,10 +1,19 @@
 import {getGame} from "@/apiServices/games";
 import Reviews from "@/components/Reviews";
+import {notFound} from "next/navigation";
 
 
 export default async function GamePage({params}) {
    const gameId = params.id;
-   const game = await getGame(gameId);
+   let game;
+   try {
+      game = await getGame(gameId);
+   } catch (error) {
+      console.log(error,"here")
+   }
+   if (!game) {
+      return notFound();
+   }
    const dateString = game?.releaseDate;
    const date = new Date(dateString);
    const formattedDate = date.toLocaleDateString("en-US", {

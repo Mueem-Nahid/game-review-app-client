@@ -1,9 +1,13 @@
+import {fetchError} from "@/utils/utils";
+
 export const allGames = async () => {
    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/all-games`,
       {next: {revalidate: 10}}
    );
+   fetchError(response);
    const data = await response.json();
+   console.log(data,'----')
    return data.data.games;
 }
 
@@ -11,8 +15,8 @@ export const getGame = async (id) => {
    const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}/game/${id}`
    );
+   fetchError(response);
    const data = await response.json();
-   console.log("game: ", data)
    return data.data.game;
 }
 
@@ -25,11 +29,7 @@ export const uploadImages = async (formData, path, token) => {
          },
          body: formData,
       });
-
-      if (!response.ok) {
-         console.log('Failed to upload images');
-      }
-
+      fetchError(response);
       const data = await response.json();
       return data?.data?.images;
    } catch (error) {
@@ -47,5 +47,6 @@ export const addNewGame = async (payload, token) => {
       },
       body: JSON.stringify(payload),
    });
+   fetchError(response);
    return await response.json()
 }

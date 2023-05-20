@@ -3,11 +3,17 @@ import {allGames} from "@/apiServices/games";
 import Hero from "@/components/Hero";
 
 export default async function Home({searchParams}) {
-   const games = await allGames();
+   let games = [];
+
+   try {
+      games = await allGames();
+   } catch (error) {
+      console.log(error)
+   }
 
    return (
       <div>
-         <Hero />
+         <Hero/>
          <Games games={games}/>
       </div>
    );

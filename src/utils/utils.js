@@ -1,5 +1,11 @@
 import {maxFileSize} from "./constants";
 
+export const fetchError = (res) => {
+   if (!res.ok) {
+      throw new Error('Failed to fetch data');
+   }
+}
+
 export const handleOpenInput = (refInput) => {
    refInput.current.click();
 };

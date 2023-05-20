@@ -9,8 +9,8 @@ const Hero = () => {
                </h1>
                <p className="max-w-2xl text-justify mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Discover
                   the ultimate destination for gaming enthusiasts, where data meets passion. Game Insights brings you
-                  in-depth analysis, reviews, and the latest trends from the dynamic world of gaming. Whether you're a
-                  hardcore gamer, industry professional, or simply curious about the gaming landscape, we've got you
+                  in-depth analysis, reviews, and the latest trends from the dynamic world of gaming. Whether you are a
+                  hardcore gamer, industry professional, or simply curious about the gaming landscape, we have got you
                   covered.</p>
             </div>
             <div className="lg:mt-0 lg:col-span-5 lg:flex">
