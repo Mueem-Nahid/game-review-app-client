@@ -42,7 +42,7 @@ const Card = ({game}) => {
                   </div>
                   <Link href={`/game/${game._id}`}>
                      <div
-                        className="bg-gray-200 px-3 py-1 cursor-pointer rounded-full text-xs font-bold text-gray-800 hidden md:block">
+                        className="bg-gray-200 px-3 py-1 cursor-pointer rounded-full text-xs font-bold text-gray-800 block">
                         View Details
                      </div>
                   </Link>
