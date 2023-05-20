@@ -29,6 +29,9 @@ const Dashboard = ({games}) => {
                }
                </tbody>
             </table>
+            {
+               !games.length && <h1 className="text-xl text-center p-5">No games available. Add some games.</h1>
+            }
          </div>
       </div>
    );

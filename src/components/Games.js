@@ -1,6 +1,7 @@
 import Card from "@/components/Card";
 
 const Games = ({games}) => {
+   console.log(games)
    return (
       <div className="flex flex-col justify-center items-center">
          <h1
@@ -8,9 +9,13 @@ const Games = ({games}) => {
             Latest games
          </h1>
          <div className="sm:grid grid-cols-1 max-w-6xl mx-auto py-6">
-            {games.map((game) => (
+            {games.length ? games.map((game) => (
                <Card key={game._id} game={game}/>
-            ))}
+            )) :
+               <h1
+                  className="text-2xl font-extrabold dark:text-white">
+                  No games available
+               </h1>}
          </div>
       </div>
    );
