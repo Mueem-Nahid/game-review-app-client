@@ -22,8 +22,9 @@ const Signup = () => {
       const {name, value} = e.target;
       setSignup({...signup, [name]: value});
    };
-   const handleSignupSubmit = async () => {
+   const handleSignupSubmit = async (e) => {
       try {
+         e.preventDefault();
          const data = await signupUser(signup);
          if (data.status === 200) {
             setSuccessMessage(data.message);
